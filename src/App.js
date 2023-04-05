@@ -1,6 +1,8 @@
 import "./App.css";
 import Board from "./components/board";
 import Nav from "./components/nav";
+import Input from "./components/input";
+/* import Output from "./components/Output"; */
 
 function App() {
   return (
@@ -9,7 +11,9 @@ function App() {
         <h1>Burak's Wordle</h1>
       </nav> */}
       <Nav />
+      <Input />
       <Board />
+      {/* <Output /> */}
     </div>
   );
 }
