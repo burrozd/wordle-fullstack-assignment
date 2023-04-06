@@ -3,7 +3,7 @@ import "../App.css";
 
 function Output(props) {
   const { word } = props;
-  console.log(word); // add this line to check the value of word
+  console.log(word); //check the value of word
 
   let letters = [];
   if (word && typeof word === "string") {
