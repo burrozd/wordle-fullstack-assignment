@@ -89,6 +89,7 @@ nav h1 {
   display: flex;
   align-items: center;
   padding-left: 43vw;
+  padding-bottom: 4vh;
 }
 
 .word-input {

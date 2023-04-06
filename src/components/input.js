@@ -13,7 +13,7 @@ function Input() {
     const input = inputRef.current.value;
 
     if (/^[A-Za-z]+$/.test(input)) {
-      setWordInput(input);
+      setWordInput(input.split(""));
     } else {
       alert("Please enter only letters!");
     }

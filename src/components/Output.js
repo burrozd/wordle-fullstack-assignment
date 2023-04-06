@@ -2,12 +2,47 @@ import React from "react";
 import "../App.css";
 
 function Output(props) {
+  const { word } = props;
+  console.log(word); // add this line to check the value of word
+
+  let letters = [];
+  if (word && typeof word === "string") {
+    letters = word.split("");
+  }
+
   return (
-    <p className="word-output">Word from parent component: {props.word}</p>
+    <div className="letter-output-container">
+      {letters.map((letter, index) => (
+        <span className="word-output" key={index}>
+          {letter}
+        </span>
+      ))}
+    </div>
   );
 }
 
 export default Output;
+
+/* import React from "react";
+import "../App.css";
+
+function Output(props) {
+  const { word } = props;
+  console.log(word); // add this line to check the value of word
+  const letters = word.split("");
+
+  return (
+    <div className="letter-output-container">
+      {letters.map((letter, index) => (
+        <span className="word-output" key={index}>
+          {letter}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+export default Output; */
 
 /* import React from "react";
 import wordInput from "./input";
