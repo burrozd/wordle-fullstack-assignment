@@ -1,15 +1,18 @@
 import React from "react";
 import Tile from "./tile";
 
-function AttemptThree() {
+function AttemptThree(props) {
+  const { letters, row } = props;
+
   return (
     <div className="row">
-      <Tile letterPosition={0} numOfAttempt={2} />
-      <Tile letterPosition={1} numOfAttempt={2} />
-      <Tile letterPosition={2} numOfAttempt={2} />
-      <Tile letterPosition={3} numOfAttempt={2} />
-      <Tile letterPosition={4} numOfAttempt={2} />
+      {letters &&
+        letters.map((letter, index) => {
+          const tileIndex = (row - 1) * 5 + index;
+          return <Tile letter={letter} key={tileIndex} />;
+        })}
     </div>
   );
 }
+
 export default AttemptThree;

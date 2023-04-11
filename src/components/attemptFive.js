@@ -1,15 +1,15 @@
 import React from "react";
 import Tile from "./tile";
 
-function AttemptFive() {
+function AttemptFive(props) {
+  const { letters } = props;
+
   return (
     <div className="row">
-      <Tile letterPosition={0} numOfAttempt={4} />
-      <Tile letterPosition={1} numOfAttempt={4} />
-      <Tile letterPosition={2} numOfAttempt={4} />
-      <Tile letterPosition={3} numOfAttempt={4} />
-      <Tile letterPosition={4} numOfAttempt={4} />
+      {letters &&
+        letters.map((letter, index) => <Tile letter={letter} key={index} />)}
     </div>
   );
 }
+
 export default AttemptFive;
