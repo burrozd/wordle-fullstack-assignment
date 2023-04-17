@@ -136,6 +136,7 @@ export default Attempt;
 import React, { useState } from "react";
 import Tile from "./tile";
 import { v4 as uuidv4 } from "uuid";
+import "../App.css";
 
 function Attempt({
   letters,
@@ -147,31 +148,38 @@ function Attempt({
   setEnteredWords,
 }) {
   const [attempts, setAttempts] = useState([]);
-
-  const handleChange = (event) => {
-    const { value } = event.target;
-    setSelectedAttempt(value);
-  };
+  const [numAttempts, setNumAttempts] = useState(0);
+  const isMaxAttemptsReached = numAttempts >= 6;
 
   const handleWordSubmit = (event) => {
     event.preventDefault();
     const word = attempts[index] || "";
-    if (word.length === 5) {
+    if (word.length === 5 && numAttempts < 6) {
       setAttempts((prevAttempts) => {
         const newAttempts = [...prevAttempts];
         newAttempts[index] = word;
         if (index === newAttempts.length - 1) {
-          newAttempts.push("");
-          setIndex(index + 1);
+          const newNumAttempts = numAttempts + 1;
+          setNumAttempts(newNumAttempts);
+          if (newNumAttempts === 6) {
+            setEnteredWords((prevWords) => [
+              ...prevWords,
+              { id: uuidv4(), word: newAttempts.join("") },
+            ]);
+            setIndex(0);
+            setAttempts([]);
+            setNumAttempts(0);
+          } else {
+            newAttempts.push("");
+            setIndex(index + 1);
+          }
         }
         return newAttempts;
       });
-      setEnteredWords((prevEnteredWords) => [
-        ...prevEnteredWords,
-        { id: uuidv4(), word: word },
-      ]);
     }
   };
+
+  console.log("outside of function");
 
   return (
     <div className="row">
@@ -193,8 +201,13 @@ function Attempt({
                 return newAttempts;
               });
             }}
+            disabled={isMaxAttemptsReached}
           />
-          <button type="submit" className="word-submit">
+          <button
+            type="submit"
+            className="word-submit"
+            disabled={isMaxAttemptsReached}
+          >
             Submit
           </button>
         </form>

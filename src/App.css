@@ -88,7 +88,7 @@ nav h1 {
 .word-input-container {
   display: flex;
   align-items: center;
-  padding-left: 43vw;
+  padding-left: 6vw;
   padding-bottom: 4vh;
 }
 
@@ -130,7 +130,23 @@ nav h1 {
   border: 1px solid #5551ff;
 }
 
+.letter-output-container {
+  display: flex;
+}
+
 .word-output {
+  flex: 33%;
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  margin: 5px;
+  padding-bottom: 2px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: bolder;
+  border-radius: 10px;
+  background-color: white;
   color: black;
-  font-size: x-large;
+  font-family: Arial, Helvetica, sans-serif;
 }

@@ -115,8 +115,7 @@ function Board({ letters }) {
 export default Board;
  */
 
-import React, { useState } from "react";
-/* import Attempt from "./attempt"; */
+/* import React, { useState } from "react";
 import "../App.css";
 import Input from "./input";
 import Output from "./Output";
@@ -124,16 +123,156 @@ import { v4 as uuidv4 } from "uuid";
 
 function Board({ letters }) {
   const [words, setWords] = useState([]);
+  const [numAttempts, setNumAttempts] = useState(0); // add this line
 
   const handleInput = (word) => {
     setWords((prevWords) => [...prevWords, { id: uuidv4(), word: word }]);
+    setNumAttempts(numAttempts + 1); // add this line
   };
+
+  const isMaxAttemptsReached = numAttempts > 6;
 
   return (
     <div className="board">
       <h1>GAME</h1>
       <Input handleInput={handleInput} />
-      <Output enteredWords={words} />
+      {isMaxAttemptsReached ? (
+        <div>Better luck next time!</div>
+      ) : (
+        <Output enteredWords={words} />
+      )}
+    </div>
+  );
+}
+
+export default Board; */
+
+/* import React, { useState } from "react";
+import Input from "./input";
+import Output from "./Output";
+import { v4 as uuidv4 } from "uuid";
+import words from "../backend/src/words.json";
+
+function Board() {
+  const [words, setWords] = useState([]);
+  const [numAttempts, setNumAttempts] = useState(0);
+  const [selectedWord, setSelectedWord] = useState(
+    words[Math.floor(Math.random() * words.length)]
+  );
+  const [gameOver, setGameOver] = useState(false);
+
+  const handleInput = (word) => {
+    if (gameOver) {
+      return;
+    }
+
+    const isMatch = word === selectedWord;
+
+    if (isMatch) {
+      setGameOver(true);
+    } else if (numAttempts < 5) {
+      setWords((prevWords) => [...prevWords, { id: uuidv4(), word: word }]);
+      setNumAttempts((prevAttempts) => prevAttempts + 1);
+    } else {
+      setGameOver(true);
+    }
+  };
+
+  const handleNewGame = () => {
+    setSelectedWord(words[Math.floor(Math.random() * words.length)]);
+    setWords([]);
+    setNumAttempts(0);
+    setGameOver(false);
+  };
+
+  return (
+    <div className="board">
+      <h1>GAME</h1>
+      {gameOver ? (
+        <div>
+          <p>
+            {selectedWord === words[words.length - 1]?.word
+              ? "Congratulations!"
+              : "Better luck next time."}
+          </p>
+          <button onClick={handleNewGame}>New Game</button>
+        </div>
+      ) : (
+        <>
+          <p>Guess the word!</p>
+          <Input handleInput={handleInput} />
+          <Output enteredWords={words} />
+          <p>Attempts: {numAttempts} / 6</p>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default Board;
+ */
+
+import React, { useState } from "react";
+import Input from "./input";
+import Output from "./Output";
+import { v4 as uuidv4 } from "uuid";
+import words from "../backend/src/words.json";
+
+function Board() {
+  const [enteredWords, setEnteredWords] = useState([]);
+  const [numAttempts, setNumAttempts] = useState(0);
+  const [selectedWord, setSelectedWord] = useState(
+    words[Math.floor(Math.random() * words.length)]
+  );
+  const [gameOver, setGameOver] = useState(false);
+
+  const handleInput = (word) => {
+    if (gameOver) {
+      return;
+    }
+
+    const isMatch = word === selectedWord;
+
+    if (isMatch) {
+      setGameOver(true);
+    } else if (numAttempts < 5) {
+      setEnteredWords((prevWords) => [
+        ...prevWords,
+        { id: uuidv4(), word: word },
+      ]);
+      setNumAttempts((prevAttempts) => prevAttempts + 1);
+    } else {
+      setGameOver(true);
+    }
+  };
+
+  const handleNewGame = () => {
+    setSelectedWord(words[Math.floor(Math.random() * words.length)]);
+    setEnteredWords([]);
+    setNumAttempts(0);
+    setGameOver(false);
+  };
+
+  return (
+    <div className="board">
+      <h1>GAME</h1>
+      {gameOver ? (
+        <div>
+          <p>
+            {selectedWord === enteredWords[enteredWords.length - 1]?.word
+              ? "Congratulations!"
+              : "Better luck next time."}
+          </p>
+          <button onClick={handleNewGame}>New Game</button>
+        </div>
+      ) : (
+        <>
+          <p>Guess the word!</p>
+          <Input handleInput={handleInput} />
+          <Output enteredWords={enteredWords} />
+          <p>Attempts: {numAttempts} / 6</p>
+        </>
+      )}
     </div>
   );
 }
